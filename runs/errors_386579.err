@@ -1,0 +1,365 @@
++ ENGINE=vllm
++ export VLLM_ATTENTION_BACKEND=XFORMERS
++ VLLM_ATTENTION_BACKEND=XFORMERS
++ train_data_size=32
++ val_data_size=128
++ group_size=1
++ python3 -m examples.data_preprocess.prepare --mode text --train_data_size 32 --val_data_size 128
+/gpfs/radev/home/ad2742/verl-agent/verl/__init__.py:17: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+/gpfs/radev/scratch/lafferty/ad2742/.conda/envs/verl-agent-webshop/lib/python3.10/site-packages/transformers/utils/hub.py:105: FutureWarning: Using `TRANSFORMERS_CACHE` is deprecated and will be removed in v5 of Transformers. Use `HF_HOME` instead.
+  warnings.warn(
+Creating parquet from Arrow format:   0%|          | 0/1 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 1/1 [00:00<00:00, 1337.90ba/s]
+Creating parquet from Arrow format:   0%|          | 0/1 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 1/1 [00:00<00:00, 2030.16ba/s]
++ python3 -m verl.trainer.main_ppo algorithm.adv_estimator=grpo data.train_files=/gpfs/radev/home/ad2742/data/verl-agent/text/train.parquet data.val_files=/gpfs/radev/home/ad2742/data/verl-agent/text/test.parquet data.train_batch_size=32 data.val_batch_size=128 data.max_prompt_length=4096 data.max_response_length=512 data.filter_overlong_prompts=True data.truncation=error data.return_raw_chat=True actor_rollout_ref.model.path=Qwen/Qwen2.5-1.5B-Instruct actor_rollout_ref.actor.optim.lr=5e-7 actor_rollout_ref.model.use_remove_padding=True actor_rollout_ref.actor.ppo_mini_batch_size=64 actor_rollout_ref.actor.ppo_micro_batch_size_per_gpu=8 actor_rollout_ref.actor.use_kl_loss=True actor_rollout_ref.actor.kl_loss_coef=0.01 actor_rollout_ref.actor.kl_loss_type=low_var_kl actor_rollout_ref.model.enable_gradient_checkpointing=True actor_rollout_ref.actor.fsdp_config.param_offload=False actor_rollout_ref.actor.fsdp_config.optimizer_offload=False actor_rollout_ref.rollout.log_prob_micro_batch_size_per_gpu=8 actor_rollout_ref.rollout.tensor_model_parallel_size=2 actor_rollout_ref.rollout.name=vllm actor_rollout_ref.rollout.gpu_memory_utilization=0.45 actor_rollout_ref.rollout.enable_chunked_prefill=False actor_rollout_ref.rollout.enforce_eager=False actor_rollout_ref.rollout.free_cache_engine=False actor_rollout_ref.rollout.val_kwargs.temperature=0.4 actor_rollout_ref.rollout.val_kwargs.do_sample=True actor_rollout_ref.ref.log_prob_micro_batch_size_per_gpu=32 actor_rollout_ref.ref.fsdp_config.param_offload=True actor_rollout_ref.actor.use_invalid_action_penalty=True actor_rollout_ref.actor.invalid_action_penalty_coef=0.1 algorithm.use_kl_in_reward=False env.env_name=Webshop env.seed=0 env.max_steps=50 env.rollout.n=1 trainer.critic_warmup=0 'trainer.logger=[console,wandb]' trainer.project_name=verl_agent_webshop trainer.experiment_name=grpo_qwen2.5_1.5b trainer.n_gpus_per_node=4 trainer.nnodes=1 trainer.save_freq=-1 trainer.test_freq=5 trainer.total_epochs=150 trainer.val_before_train=True
+/gpfs/radev/home/ad2742/verl-agent/verl/__init__.py:17: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+/gpfs/radev/scratch/lafferty/ad2742/.conda/envs/verl-agent-webshop/lib/python3.10/site-packages/transformers/utils/hub.py:105: FutureWarning: Using `TRANSFORMERS_CACHE` is deprecated and will be removed in v5 of Transformers. Use `HF_HOME` instead.
+  warnings.warn(
+2025-07-08 13:01:15,807	INFO worker.py:1908 -- Started a local Ray instance. View the dashboard at [1m[32m127.0.0.1:8265 [39m[22m
+[36m(pid=2420259)[0m /gpfs/radev/home/ad2742/verl-agent/verl/__init__.py:17: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+[36m(pid=2420259)[0m   import pkg_resources
+[36m(pid=2420259)[0m /gpfs/radev/scratch/lafferty/ad2742/.conda/envs/verl-agent-webshop/lib/python3.10/site-packages/transformers/utils/hub.py:105: FutureWarning: Using `TRANSFORMERS_CACHE` is deprecated and will be removed in v5 of Transformers. Use `HF_HOME` instead.
+[36m(pid=2420259)[0m   warnings.warn(
+[36m(TaskRunner pid=2420259)[0m Warning: Gym version v0.24.0 has a number of critical issues with `gym.make` such that the `reset` and `step` functions are called before returning the environment. It is recommend to downgrading to v0.23.1 or upgrading to v0.25.1
+[36m(WebshopWorker pid=2420446)[0m <frozen importlib._bootstrap>:241: DeprecationWarning: builtin type SwigPyPacked has no __module__ attribute
+[36m(WebshopWorker pid=2420446)[0m <frozen importlib._bootstrap>:241: DeprecationWarning: builtin type SwigPyObject has no __module__ attribute
+[36m(WebshopWorker pid=2420446)[0m <frozen importlib._bootstrap>:241: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+[36m(WebshopWorker pid=2420446)[0m /gpfs/radev/scratch/lafferty/ad2742/.conda/envs/verl-agent-webshop/lib/python3.10/site-packages/transformers/utils/hub.py:105: FutureWarning: Using `TRANSFORMERS_CACHE` is deprecated and will be removed in v5 of Transformers. Use `HF_HOME` instead.
+[36m(WebshopWorker pid=2420446)[0m   warnings.warn(
+[36m(pid=2420450)[0m Warning: Gym version v0.24.0 has a number of critical issues with `gym.make` such that the `reset` and `step` functions are called before returning the environment. It is recommend to downgrading to v0.23.1 or upgrading to v0.25.1[32m [repeated 32x across cluster] (Ray deduplicates logs by default. Set RAY_DEDUP_LOGS=0 to disable log deduplication, or see https://docs.ray.io/en/master/ray-observability/user-guides/configure-logging.html#log-deduplication for more options.)[0m
+[36m(WebshopWorker pid=2420446)[0m /gpfs/radev/scratch/lafferty/ad2742/.conda/envs/verl-agent-webshop/lib/python3.10/site-packages/spacy/cli/_util.py:23: DeprecationWarning: Importing 'parser.split_arg_string' is deprecated, it will only be available in 'shell_completion' in Click 9.0.
+[36m(WebshopWorker pid=2420446)[0m   from click.parser import split_arg_string
+[36m(WebshopWorker pid=2420446)[0m /gpfs/radev/scratch/lafferty/ad2742/.conda/envs/verl-agent-webshop/lib/python3.10/site-packages/weasel/util/config.py:8: DeprecationWarning: Importing 'parser.split_arg_string' is deprecated, it will only be available in 'shell_completion' in Click 9.0.
+[36m(WebshopWorker pid=2420446)[0m   from click.parser import split_arg_string
+[36m(WebshopWorker pid=2420448)[0m <frozen importlib._bootstrap>:241: DeprecationWarning: builtin type SwigPyPacked has no __module__ attribute[32m [repeated 31x across cluster][0m
+[36m(WebshopWorker pid=2420448)[0m <frozen importlib._bootstrap>:241: DeprecationWarning: builtin type SwigPyObject has no __module__ attribute[32m [repeated 31x across cluster][0m
+[36m(WebshopWorker pid=2420448)[0m <frozen importlib._bootstrap>:241: DeprecationWarning: builtin type swigvarlink has no __module__ attribute[32m [repeated 31x across cluster][0m
+[36m(WebshopWorker pid=2420448)[0m /gpfs/radev/scratch/lafferty/ad2742/.conda/envs/verl-agent-webshop/lib/python3.10/site-packages/transformers/utils/hub.py:105: FutureWarning: Using `TRANSFORMERS_CACHE` is deprecated and will be removed in v5 of Transformers. Use `HF_HOME` instead.[32m [repeated 31x across cluster][0m
+[36m(WebshopWorker pid=2420448)[0m   warnings.warn([32m [repeated 31x across cluster][0m
+[36m(WebshopWorker pid=2420446)[0m /gpfs/radev/scratch/lafferty/ad2742/.conda/envs/verl-agent-webshop/lib/python3.10/site-packages/thefuzz/fuzz.py:11: UserWarning: Using slow pure-python SequenceMatcher. Install python-Levenshtein to remove this warning
+[36m(WebshopWorker pid=2420446)[0m   warnings.warn('Using slow pure-python SequenceMatcher. Install python-Levenshtein to remove this warning')
+[36m(WebshopWorker pid=2420446)[0m   0%|          | 0/1000 [00:00<?, ?it/s]100%|██████████| 1000/1000 [00:00<00:00, 119468.61it/s]
+[36m(WebshopWorker pid=2420446)[0m /gpfs/radev/scratch/lafferty/ad2742/.conda/envs/verl-agent-webshop/lib/python3.10/site-packages/bs4/element.py:784: DeprecationWarning: The 'text' argument to find()-type methods is deprecated. Use 'string' instead.
+[36m(WebshopWorker pid=2420446)[0m /gpfs/radev/scratch/lafferty/ad2742/.conda/envs/verl-agent-webshop/lib/python3.10/site-packages/gym/envs/registration.py:619: UserWarning: [33mWARN: Env check failed with the following message: You must specify an observation space (cf gym.spaces) cf https://github.com/openai/gym/blob/master/gym/spaces/
+[36m(WebshopWorker pid=2420446)[0m You can set `disable_env_checker=True` to disable this check.[0m
+[36m(WebshopWorker pid=2420446)[0m   logger.warn(
+[36m(WebshopWorker pid=2420439)[0m 100%|██████████| 1000/1000 [00:00<00:00, 123405.44it/s]
+[36m(WebshopWorker pid=2420449)[0m 100%|██████████| 1000/1000 [00:00<00:00, 147822.09it/s]
+[36m(WebshopWorker pid=2420450)[0m 100%|██████████| 1000/1000 [00:00<00:00, 137807.33it/s]
+[36m(pid=2425241)[0m Warning: Gym version v0.24.0 has a number of critical issues with `gym.make` such that the `reset` and `step` functions are called before returning the environment. It is recommend to downgrading to v0.23.1 or upgrading to v0.25.1
+[36m(WebshopWorker pid=2420433)[0m /gpfs/radev/scratch/lafferty/ad2742/.conda/envs/verl-agent-webshop/lib/python3.10/site-packages/weasel/util/config.py:8: DeprecationWarning: Importing 'parser.split_arg_string' is deprecated, it will only be available in 'shell_completion' in Click 9.0.[32m [repeated 62x across cluster][0m
+[36m(WebshopWorker pid=2420433)[0m   from click.parser import split_arg_string[32m [repeated 62x across cluster][0m
+[36m(WebshopWorker pid=2420433)[0m   warnings.warn([32m [repeated 32x across cluster][0m
+[36m(WebshopWorker pid=2420450)[0m /gpfs/radev/scratch/lafferty/ad2742/.conda/envs/verl-agent-webshop/lib/python3.10/site-packages/thefuzz/fuzz.py:11: UserWarning: Using slow pure-python SequenceMatcher. Install python-Levenshtein to remove this warning[32m [repeated 31x across cluster][0m
+[36m(WebshopWorker pid=2420450)[0m   warnings.warn('Using slow pure-python SequenceMatcher. Install python-Levenshtein to remove this warning')[32m [repeated 31x across cluster][0m
+[36m(WebshopWorker pid=2420433)[0m   0%|          | 0/1000 [00:00<?, ?it/s]100%|██████████| 1000/1000 [00:00<00:00, 140805.16it/s][32m [repeated 31x across cluster][0m
+[36m(WebshopWorker pid=2420433)[0m /gpfs/radev/scratch/lafferty/ad2742/.conda/envs/verl-agent-webshop/lib/python3.10/site-packages/bs4/element.py:784: DeprecationWarning: The 'text' argument to find()-type methods is deprecated. Use 'string' instead.[32m [repeated 31x across cluster][0m
+[36m(WebshopWorker pid=2420433)[0m /gpfs/radev/scratch/lafferty/ad2742/.conda/envs/verl-agent-webshop/lib/python3.10/site-packages/gym/envs/registration.py:619: UserWarning: [33mWARN: Env check failed with the following message: You must specify an observation space (cf gym.spaces) cf https://github.com/openai/gym/blob/master/gym/spaces/[32m [repeated 31x across cluster][0m
+[36m(WebshopWorker pid=2420433)[0m You can set `disable_env_checker=True` to disable this check.[0m[32m [repeated 31x across cluster][0m
+[36m(WebshopWorker pid=2420433)[0m   logger.warn([32m [repeated 31x across cluster][0m
+[36m(WebshopWorker pid=2425241)[0m <frozen importlib._bootstrap>:241: DeprecationWarning: builtin type SwigPyPacked has no __module__ attribute
+[36m(WebshopWorker pid=2425241)[0m <frozen importlib._bootstrap>:241: DeprecationWarning: builtin type SwigPyObject has no __module__ attribute
+[36m(WebshopWorker pid=2425241)[0m <frozen importlib._bootstrap>:241: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+[36m(pid=2426738)[0m Warning: Gym version v0.24.0 has a number of critical issues with `gym.make` such that the `reset` and `step` functions are called before returning the environment. It is recommend to downgrading to v0.23.1 or upgrading to v0.25.1[32m [repeated 81x across cluster][0m
+[36m(WebshopWorker pid=2425307)[0m /gpfs/radev/scratch/lafferty/ad2742/.conda/envs/verl-agent-webshop/lib/python3.10/site-packages/transformers/utils/hub.py:105: FutureWarning: Using `TRANSFORMERS_CACHE` is deprecated and will be removed in v5 of Transformers. Use `HF_HOME` instead.
+[36m(WebshopWorker pid=2425307)[0m   warnings.warn(
+[36m(WebshopWorker pid=2425356)[0m <frozen importlib._bootstrap>:241: DeprecationWarning: builtin type SwigPyPacked has no __module__ attribute[32m [repeated 34x across cluster][0m
+[36m(WebshopWorker pid=2425356)[0m <frozen importlib._bootstrap>:241: DeprecationWarning: builtin type SwigPyObject has no __module__ attribute[32m [repeated 34x across cluster][0m
+[36m(WebshopWorker pid=2425356)[0m <frozen importlib._bootstrap>:241: DeprecationWarning: builtin type swigvarlink has no __module__ attribute[32m [repeated 34x across cluster][0m
+[36m(pid=2430415)[0m Warning: Gym version v0.24.0 has a number of critical issues with `gym.make` such that the `reset` and `step` functions are called before returning the environment. It is recommend to downgrading to v0.23.1 or upgrading to v0.25.1[32m [repeated 46x across cluster][0m
+[36m(WebshopWorker pid=2427154)[0m /gpfs/radev/scratch/lafferty/ad2742/.conda/envs/verl-agent-webshop/lib/python3.10/site-packages/transformers/utils/hub.py:105: FutureWarning: Using `TRANSFORMERS_CACHE` is deprecated and will be removed in v5 of Transformers. Use `HF_HOME` instead.[32m [repeated 31x across cluster][0m
+[36m(WebshopWorker pid=2427154)[0m   warnings.warn([32m [repeated 31x across cluster][0m
+[36m(WebshopWorker pid=2428265)[0m <frozen importlib._bootstrap>:241: DeprecationWarning: builtin type SwigPyPacked has no __module__ attribute[32m [repeated 18x across cluster][0m
+[36m(WebshopWorker pid=2428265)[0m <frozen importlib._bootstrap>:241: DeprecationWarning: builtin type SwigPyObject has no __module__ attribute[32m [repeated 18x across cluster][0m
+[36m(WebshopWorker pid=2428265)[0m <frozen importlib._bootstrap>:241: DeprecationWarning: builtin type swigvarlink has no __module__ attribute[32m [repeated 18x across cluster][0m
+[36m(WebshopWorker pid=2426046)[0m /gpfs/radev/scratch/lafferty/ad2742/.conda/envs/verl-agent-webshop/lib/python3.10/site-packages/transformers/utils/hub.py:105: FutureWarning: Using `TRANSFORMERS_CACHE` is deprecated and will be removed in v5 of Transformers. Use `HF_HOME` instead.[32m [repeated 31x across cluster][0m
+[36m(WebshopWorker pid=2426046)[0m   warnings.warn([32m [repeated 31x across cluster][0m
+[36m(WebshopWorker pid=2429712)[0m <frozen importlib._bootstrap>:241: DeprecationWarning: builtin type SwigPyPacked has no __module__ attribute[32m [repeated 45x across cluster][0m
+[36m(WebshopWorker pid=2429712)[0m <frozen importlib._bootstrap>:241: DeprecationWarning: builtin type SwigPyObject has no __module__ attribute[32m [repeated 45x across cluster][0m
+[36m(WebshopWorker pid=2429712)[0m <frozen importlib._bootstrap>:241: DeprecationWarning: builtin type swigvarlink has no __module__ attribute[32m [repeated 45x across cluster][0m
+[36m(WebshopWorker pid=2429712)[0m /gpfs/radev/scratch/lafferty/ad2742/.conda/envs/verl-agent-webshop/lib/python3.10/site-packages/transformers/utils/hub.py:105: FutureWarning: Using `TRANSFORMERS_CACHE` is deprecated and will be removed in v5 of Transformers. Use `HF_HOME` instead.[32m [repeated 48x across cluster][0m
+[36m(WebshopWorker pid=2429712)[0m   warnings.warn([32m [repeated 48x across cluster][0m
+[36m(WebshopWorker pid=2425242)[0m /gpfs/radev/scratch/lafferty/ad2742/.conda/envs/verl-agent-webshop/lib/python3.10/site-packages/spacy/cli/_util.py:23: DeprecationWarning: Importing 'parser.split_arg_string' is deprecated, it will only be available in 'shell_completion' in Click 9.0.
+[36m(WebshopWorker pid=2425242)[0m   from click.parser import split_arg_string
+[36m(WebshopWorker pid=2425242)[0m /gpfs/radev/scratch/lafferty/ad2742/.conda/envs/verl-agent-webshop/lib/python3.10/site-packages/weasel/util/config.py:8: DeprecationWarning: Importing 'parser.split_arg_string' is deprecated, it will only be available in 'shell_completion' in Click 9.0.
+[36m(WebshopWorker pid=2425242)[0m   from click.parser import split_arg_string
+[36m(WebshopWorker pid=2425242)[0m /gpfs/radev/scratch/lafferty/ad2742/.conda/envs/verl-agent-webshop/lib/python3.10/site-packages/thefuzz/fuzz.py:11: UserWarning: Using slow pure-python SequenceMatcher. Install python-Levenshtein to remove this warning
+[36m(WebshopWorker pid=2425242)[0m   warnings.warn('Using slow pure-python SequenceMatcher. Install python-Levenshtein to remove this warning')
+[36m(WebshopWorker pid=2428943)[0m <frozen importlib._bootstrap>:241: DeprecationWarning: builtin type SwigPyPacked has no __module__ attribute[32m [repeated 30x across cluster][0m
+[36m(WebshopWorker pid=2428943)[0m <frozen importlib._bootstrap>:241: DeprecationWarning: builtin type SwigPyObject has no __module__ attribute[32m [repeated 30x across cluster][0m
+[36m(WebshopWorker pid=2428943)[0m <frozen importlib._bootstrap>:241: DeprecationWarning: builtin type swigvarlink has no __module__ attribute[32m [repeated 30x across cluster][0m
+[36m(WebshopWorker pid=2425242)[0m   0%|          | 0/1000 [00:00<?, ?it/s]100%|██████████| 1000/1000 [00:00<00:00, 151336.97it/s]
+[36m(WebshopWorker pid=2425242)[0m /gpfs/radev/scratch/lafferty/ad2742/.conda/envs/verl-agent-webshop/lib/python3.10/site-packages/bs4/element.py:784: DeprecationWarning: The 'text' argument to find()-type methods is deprecated. Use 'string' instead.
+[36m(WebshopWorker pid=2425242)[0m /gpfs/radev/scratch/lafferty/ad2742/.conda/envs/verl-agent-webshop/lib/python3.10/site-packages/gym/envs/registration.py:619: UserWarning: [33mWARN: Env check failed with the following message: You must specify an observation space (cf gym.spaces) cf https://github.com/openai/gym/blob/master/gym/spaces/
+[36m(WebshopWorker pid=2425242)[0m You can set `disable_env_checker=True` to disable this check.[0m
+[36m(WebshopWorker pid=2425242)[0m   logger.warn(
+[36m(WebshopWorker pid=2430207)[0m /gpfs/radev/scratch/lafferty/ad2742/.conda/envs/verl-agent-webshop/lib/python3.10/site-packages/transformers/utils/hub.py:105: FutureWarning: Using `TRANSFORMERS_CACHE` is deprecated and will be removed in v5 of Transformers. Use `HF_HOME` instead.[32m [repeated 17x across cluster][0m
+[36m(WebshopWorker pid=2425242)[0m   warnings.warn([32m [repeated 18x across cluster][0m
+[36m(WebshopWorker pid=2425201)[0m /gpfs/radev/scratch/lafferty/ad2742/.conda/envs/verl-agent-webshop/lib/python3.10/site-packages/weasel/util/config.py:8: DeprecationWarning: Importing 'parser.split_arg_string' is deprecated, it will only be available in 'shell_completion' in Click 9.0.[32m [repeated 2x across cluster][0m
+[36m(WebshopWorker pid=2425201)[0m   from click.parser import split_arg_string[32m [repeated 2x across cluster][0m
+[36m(WebshopWorker pid=2425201)[0m /gpfs/radev/scratch/lafferty/ad2742/.conda/envs/verl-agent-webshop/lib/python3.10/site-packages/thefuzz/fuzz.py:11: UserWarning: Using slow pure-python SequenceMatcher. Install python-Levenshtein to remove this warning
+[36m(WebshopWorker pid=2425201)[0m   warnings.warn('Using slow pure-python SequenceMatcher. Install python-Levenshtein to remove this warning')
+[36m(WebshopWorker pid=2425201)[0m   0%|          | 0/1000 [00:00<?, ?it/s]100%|██████████| 1000/1000 [00:00<00:00, 146977.75it/s]
+[36m(WebshopWorker pid=2425201)[0m /gpfs/radev/scratch/lafferty/ad2742/.conda/envs/verl-agent-webshop/lib/python3.10/site-packages/bs4/element.py:784: DeprecationWarning: The 'text' argument to find()-type methods is deprecated. Use 'string' instead.
+[36m(WebshopWorker pid=2425201)[0m /gpfs/radev/scratch/lafferty/ad2742/.conda/envs/verl-agent-webshop/lib/python3.10/site-packages/gym/envs/registration.py:619: UserWarning: [33mWARN: Env check failed with the following message: You must specify an observation space (cf gym.spaces) cf https://github.com/openai/gym/blob/master/gym/spaces/
+[36m(WebshopWorker pid=2425201)[0m You can set `disable_env_checker=True` to disable this check.[0m
+[36m(WebshopWorker pid=2425201)[0m   logger.warn(
+[36m(WebshopWorker pid=2425233)[0m /gpfs/radev/scratch/lafferty/ad2742/.conda/envs/verl-agent-webshop/lib/python3.10/site-packages/thefuzz/fuzz.py:11: UserWarning: Using slow pure-python SequenceMatcher. Install python-Levenshtein to remove this warning
+[36m(WebshopWorker pid=2425233)[0m   warnings.warn('Using slow pure-python SequenceMatcher. Install python-Levenshtein to remove this warning')
+[36m(WebshopWorker pid=2425233)[0m   warnings.warn([32m [repeated 2x across cluster][0m
+[36m(WebshopWorker pid=2425344)[0m /gpfs/radev/scratch/lafferty/ad2742/.conda/envs/verl-agent-webshop/lib/python3.10/site-packages/weasel/util/config.py:8: DeprecationWarning: Importing 'parser.split_arg_string' is deprecated, it will only be available in 'shell_completion' in Click 9.0.[32m [repeated 4x across cluster][0m
+[36m(WebshopWorker pid=2425344)[0m   from click.parser import split_arg_string[32m [repeated 4x across cluster][0m
+[36m(WebshopWorker pid=2425344)[0m   0%|          | 0/1000 [00:00<?, ?it/s]100%|██████████| 1000/1000 [00:00<00:00, 147189.22it/s][32m [repeated 2x across cluster][0m
+[36m(WebshopWorker pid=2425344)[0m /gpfs/radev/scratch/lafferty/ad2742/.conda/envs/verl-agent-webshop/lib/python3.10/site-packages/bs4/element.py:784: DeprecationWarning: The 'text' argument to find()-type methods is deprecated. Use 'string' instead.[32m [repeated 2x across cluster][0m
+[36m(WebshopWorker pid=2425344)[0m /gpfs/radev/scratch/lafferty/ad2742/.conda/envs/verl-agent-webshop/lib/python3.10/site-packages/gym/envs/registration.py:619: UserWarning: [33mWARN: Env check failed with the following message: You must specify an observation space (cf gym.spaces) cf https://github.com/openai/gym/blob/master/gym/spaces/[32m [repeated 2x across cluster][0m
+[36m(WebshopWorker pid=2425344)[0m You can set `disable_env_checker=True` to disable this check.[0m[32m [repeated 2x across cluster][0m
+[36m(WebshopWorker pid=2425344)[0m   logger.warn([32m [repeated 2x across cluster][0m
+[36m(WebshopWorker pid=2425241)[0m /gpfs/radev/scratch/lafferty/ad2742/.conda/envs/verl-agent-webshop/lib/python3.10/site-packages/thefuzz/fuzz.py:11: UserWarning: Using slow pure-python SequenceMatcher. Install python-Levenshtein to remove this warning[32m [repeated 2x across cluster][0m
+[36m(WebshopWorker pid=2425241)[0m   warnings.warn('Using slow pure-python SequenceMatcher. Install python-Levenshtein to remove this warning')[32m [repeated 2x across cluster][0m
+[36m(WebshopWorker pid=2425344)[0m   warnings.warn(
+[36m(WebshopWorker pid=2425241)[0m /gpfs/radev/scratch/lafferty/ad2742/.conda/envs/verl-agent-webshop/lib/python3.10/site-packages/weasel/util/config.py:8: DeprecationWarning: Importing 'parser.split_arg_string' is deprecated, it will only be available in 'shell_completion' in Click 9.0.[32m [repeated 2x across cluster][0m
+[36m(WebshopWorker pid=2425241)[0m   from click.parser import split_arg_string[32m [repeated 2x across cluster][0m
+[36m(WebshopWorker pid=2425241)[0m   0%|          | 0/1000 [00:00<?, ?it/s]100%|██████████| 1000/1000 [00:00<00:00, 139619.32it/s]
+[36m(WebshopWorker pid=2425241)[0m   warnings.warn(
+[36m(WebshopWorker pid=2425357)[0m 100%|██████████| 1000/1000 [00:00<00:00, 132287.39it/s]
+[36m(WebshopWorker pid=2425356)[0m 100%|██████████| 1000/1000 [00:00<00:00, 133559.55it/s]
+[36m(WebshopWorker pid=2425243)[0m 100%|██████████| 1000/1000 [00:00<00:00, 131805.17it/s]
+[36m(WebshopWorker pid=2425269)[0m 100%|██████████| 1000/1000 [00:00<00:00, 138668.43it/s]
+[36m(WebshopWorker pid=2425307)[0m /gpfs/radev/scratch/lafferty/ad2742/.conda/envs/verl-agent-webshop/lib/python3.10/site-packages/bs4/element.py:784: DeprecationWarning: The 'text' argument to find()-type methods is deprecated. Use 'string' instead.[32m [repeated 22x across cluster][0m
+[36m(WebshopWorker pid=2425307)[0m /gpfs/radev/scratch/lafferty/ad2742/.conda/envs/verl-agent-webshop/lib/python3.10/site-packages/gym/envs/registration.py:619: UserWarning: [33mWARN: Env check failed with the following message: You must specify an observation space (cf gym.spaces) cf https://github.com/openai/gym/blob/master/gym/spaces/[32m [repeated 22x across cluster][0m
+[36m(WebshopWorker pid=2425307)[0m You can set `disable_env_checker=True` to disable this check.[0m[32m [repeated 22x across cluster][0m
+[36m(WebshopWorker pid=2425307)[0m   logger.warn([32m [repeated 22x across cluster][0m
+[36m(WebshopWorker pid=2427064)[0m /gpfs/radev/scratch/lafferty/ad2742/.conda/envs/verl-agent-webshop/lib/python3.10/site-packages/thefuzz/fuzz.py:11: UserWarning: Using slow pure-python SequenceMatcher. Install python-Levenshtein to remove this warning[32m [repeated 47x across cluster][0m
+[36m(WebshopWorker pid=2427064)[0m   warnings.warn('Using slow pure-python SequenceMatcher. Install python-Levenshtein to remove this warning')[32m [repeated 47x across cluster][0m
+[36m(WebshopWorker pid=2426331)[0m /gpfs/radev/scratch/lafferty/ad2742/.conda/envs/verl-agent-webshop/lib/python3.10/site-packages/weasel/util/config.py:8: DeprecationWarning: Importing 'parser.split_arg_string' is deprecated, it will only be available in 'shell_completion' in Click 9.0.[32m [repeated 96x across cluster][0m
+[36m(WebshopWorker pid=2426331)[0m   from click.parser import split_arg_string[32m [repeated 96x across cluster][0m
+[36m(WebshopWorker pid=2425348)[0m 100%|██████████| 1000/1000 [00:00<00:00, 44147.78it/s]
+[36m(WebshopWorker pid=2427064)[0m 100%|██████████| 1000/1000 [00:00<00:00, 135138.83it/s]
+[36m(WebshopWorker pid=2427420)[0m   0%|          | 0/1000 [00:00<?, ?it/s]100%|██████████| 1000/1000 [00:00<00:00, 137993.22it/s][32m [repeated 47x across cluster][0m
+[36m(WebshopWorker pid=2425348)[0m   warnings.warn([32m [repeated 43x across cluster][0m
+[36m(WebshopWorker pid=2427264)[0m 100%|██████████| 1000/1000 [00:00<00:00, 136970.28it/s]
+[36m(WebshopWorker pid=2428393)[0m 100%|██████████| 1000/1000 [00:00<00:00, 142329.36it/s]
+[36m(WebshopWorker pid=2430889)[0m 100%|██████████| 1000/1000 [00:00<00:00, 124106.52it/s]
+[36m(WebshopWorker pid=2427470)[0m /gpfs/radev/scratch/lafferty/ad2742/.conda/envs/verl-agent-webshop/lib/python3.10/site-packages/bs4/element.py:784: DeprecationWarning: The 'text' argument to find()-type methods is deprecated. Use 'string' instead.[32m [repeated 71x across cluster][0m
+[36m(WebshopWorker pid=2427470)[0m /gpfs/radev/scratch/lafferty/ad2742/.conda/envs/verl-agent-webshop/lib/python3.10/site-packages/gym/envs/registration.py:619: UserWarning: [33mWARN: Env check failed with the following message: You must specify an observation space (cf gym.spaces) cf https://github.com/openai/gym/blob/master/gym/spaces/[32m [repeated 71x across cluster][0m
+[36m(WebshopWorker pid=2427470)[0m You can set `disable_env_checker=True` to disable this check.[0m[32m [repeated 71x across cluster][0m
+[36m(WebshopWorker pid=2427470)[0m   logger.warn([32m [repeated 71x across cluster][0m
+[36m(WebshopWorker pid=2428943)[0m /gpfs/radev/scratch/lafferty/ad2742/.conda/envs/verl-agent-webshop/lib/python3.10/site-packages/thefuzz/fuzz.py:11: UserWarning: Using slow pure-python SequenceMatcher. Install python-Levenshtein to remove this warning[32m [repeated 60x across cluster][0m
+[36m(WebshopWorker pid=2428943)[0m   warnings.warn('Using slow pure-python SequenceMatcher. Install python-Levenshtein to remove this warning')[32m [repeated 60x across cluster][0m
+[36m(WebshopWorker pid=2428943)[0m /gpfs/radev/scratch/lafferty/ad2742/.conda/envs/verl-agent-webshop/lib/python3.10/site-packages/weasel/util/config.py:8: DeprecationWarning: Importing 'parser.split_arg_string' is deprecated, it will only be available in 'shell_completion' in Click 9.0.[32m [repeated 118x across cluster][0m
+[36m(WebshopWorker pid=2428943)[0m   from click.parser import split_arg_string[32m [repeated 118x across cluster][0m
+[36m(WebshopWorker pid=2427415)[0m   0%|          | 0/1000 [00:00<?, ?it/s]100%|██████████| 1000/1000 [00:00<00:00, 138366.51it/s][32m [repeated 61x across cluster][0m
+[36m(WebshopWorker pid=2427415)[0m   warnings.warn([32m [repeated 65x across cluster][0m
+[36m(WebshopWorker pid=2426614)[0m 100%|██████████| 1000/1000 [00:00<00:00, 124375.17it/s]
+[36m(WebshopWorker pid=2425359)[0m 100%|██████████| 1000/1000 [00:00<00:00, 132029.21it/s]
+[36m(TaskRunner pid=2420259)[0m Generating train split: 0 examples [00:00, ? examples/s]Generating train split: 32 examples [00:00, 958.94 examples/s]
+[36m(WebshopWorker pid=2425359)[0m /gpfs/radev/scratch/lafferty/ad2742/.conda/envs/verl-agent-webshop/lib/python3.10/site-packages/bs4/element.py:784: DeprecationWarning: The 'text' argument to find()-type methods is deprecated. Use 'string' instead.[32m [repeated 31x across cluster][0m
+[36m(WebshopWorker pid=2425359)[0m /gpfs/radev/scratch/lafferty/ad2742/.conda/envs/verl-agent-webshop/lib/python3.10/site-packages/gym/envs/registration.py:619: UserWarning: [33mWARN: Env check failed with the following message: You must specify an observation space (cf gym.spaces) cf https://github.com/openai/gym/blob/master/gym/spaces/[32m [repeated 31x across cluster][0m
+[36m(WebshopWorker pid=2425359)[0m You can set `disable_env_checker=True` to disable this check.[0m[32m [repeated 31x across cluster][0m
+[36m(WebshopWorker pid=2425359)[0m   logger.warn([32m [repeated 31x across cluster][0m
+[36m(WebshopWorker pid=2428087)[0m /gpfs/radev/scratch/lafferty/ad2742/.conda/envs/verl-agent-webshop/lib/python3.10/site-packages/thefuzz/fuzz.py:11: UserWarning: Using slow pure-python SequenceMatcher. Install python-Levenshtein to remove this warning[32m [repeated 16x across cluster][0m
+[36m(WebshopWorker pid=2428087)[0m   warnings.warn('Using slow pure-python SequenceMatcher. Install python-Levenshtein to remove this warning')[32m [repeated 16x across cluster][0m
+[36m(WebshopWorker pid=2428671)[0m /gpfs/radev/scratch/lafferty/ad2742/.conda/envs/verl-agent-webshop/lib/python3.10/site-packages/weasel/util/config.py:8: DeprecationWarning: Importing 'parser.split_arg_string' is deprecated, it will only be available in 'shell_completion' in Click 9.0.[32m [repeated 32x across cluster][0m
+[36m(WebshopWorker pid=2428671)[0m   from click.parser import split_arg_string[32m [repeated 32x across cluster][0m
+[36m(WebshopWorker pid=2428671)[0m   0%|          | 0/1000 [00:00<?, ?it/s]100%|██████████| 1000/1000 [00:00<00:00, 141560.77it/s][32m [repeated 15x across cluster][0m
+[36m(WebshopWorker pid=2425359)[0m   warnings.warn([32m [repeated 15x across cluster][0m
+[36m(TaskRunner pid=2420259)[0m Filtering prompts longer than 4096 tokens:   0%|          | 0/32 [00:00<?, ? examples/s]
+[36m(TaskRunner pid=2420259)[0m Filtering prompts longer than 4096 tokens: 100%|██████████| 32/32 [00:00<00:00, 1904.04 examples/s]
+[36m(TaskRunner pid=2420259)[0m Generating train split: 0 examples [00:00, ? examples/s]Generating train split: 128 examples [00:00, 50486.26 examples/s]
+[36m(TaskRunner pid=2420259)[0m Filtering prompts longer than 4096 tokens:   0%|          | 0/128 [00:00<?, ? examples/s]Filtering prompts longer than 4096 tokens: 100%|██████████| 128/128 [00:00<00:00, 7275.07 examples/s]
+[36m(TaskRunner pid=2420259)[0m DeprecationWarning: `ray.state.available_resources_per_node` is a private attribute and access will be removed in a future Ray version.
+[36m(TaskRunner pid=2420259)[0m WARNING:2025-07-08 13:03:25,731:Waiting for register center actor XP6flJ_register_center to be ready. Elapsed time: 0 seconds out of 300 seconds.
+[36m(pid=2443551)[0m /gpfs/radev/home/ad2742/verl-agent/verl/__init__.py:17: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+[36m(pid=2443551)[0m   import pkg_resources
+[36m(pid=2443551)[0m /gpfs/radev/scratch/lafferty/ad2742/.conda/envs/verl-agent-webshop/lib/python3.10/site-packages/transformers/utils/hub.py:105: FutureWarning: Using `TRANSFORMERS_CACHE` is deprecated and will be removed in v5 of Transformers. Use `HF_HOME` instead.
+[36m(pid=2443551)[0m   warnings.warn(
+[36m(pid=2443711)[0m /gpfs/radev/home/ad2742/verl-agent/verl/__init__.py:17: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+[36m(pid=2443711)[0m   import pkg_resources
+[36m(pid=2443712)[0m /gpfs/radev/home/ad2742/verl-agent/verl/__init__.py:17: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+[36m(pid=2443712)[0m   import pkg_resources
+[36m(pid=2443711)[0m   warnings.warn(
+[36m(pid=2443711)[0m /gpfs/radev/scratch/lafferty/ad2742/.conda/envs/verl-agent-webshop/lib/python3.10/site-packages/transformers/utils/hub.py:105: FutureWarning: Using `TRANSFORMERS_CACHE` is deprecated and will be removed in v5 of Transformers. Use `HF_HOME` instead.
+[36m(pid=2443712)[0m /gpfs/radev/scratch/lafferty/ad2742/.conda/envs/verl-agent-webshop/lib/python3.10/site-packages/transformers/utils/hub.py:105: FutureWarning: Using `TRANSFORMERS_CACHE` is deprecated and will be removed in v5 of Transformers. Use `HF_HOME` instead.
+[36m(WorkerDict pid=2443711)[0m You are attempting to use Flash Attention 2.0 with a model not initialized on GPU. Make sure to move the model to GPU after initializing it on CPU with `model.to('cuda')`.
+[36m(pid=2443713)[0m /gpfs/radev/home/ad2742/verl-agent/verl/__init__.py:17: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+[36m(pid=2443713)[0m   import pkg_resources
+[36m(WorkerDict pid=2443551)[0m Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in Qwen2ForCausalLM is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+[36m(pid=2443713)[0m   warnings.warn([32m [repeated 2x across cluster][0m
+[36m(pid=2443713)[0m /gpfs/radev/scratch/lafferty/ad2742/.conda/envs/verl-agent-webshop/lib/python3.10/site-packages/transformers/utils/hub.py:105: FutureWarning: Using `TRANSFORMERS_CACHE` is deprecated and will be removed in v5 of Transformers. Use `HF_HOME` instead.
+[36m(WorkerDict pid=2443551)[0m You are attempting to use Flash Attention 2.0 with a model not initialized on GPU. Make sure to move the model to GPU after initializing it on CPU with `model.to('cuda')`.[32m [repeated 3x across cluster][0m
+[36m(WorkerDict pid=2443551)[0m Capturing CUDA graph shapes:   0%|          | 0/35 [00:00<?, ?it/s]
+[36m(WorkerDict pid=2443713)[0m Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in Qwen2ForCausalLM is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`[32m [repeated 3x across cluster][0m
+[36m(WorkerDict pid=2443551)[0m Capturing CUDA graph shapes:   3%|▎         | 1/35 [00:00<00:17,  1.94it/s]
+[36m(WorkerDict pid=2443712)[0m Capturing CUDA graph shapes:   0%|          | 0/35 [00:00<?, ?it/s]
+[36m(WorkerDict pid=2443551)[0m Capturing CUDA graph shapes:  29%|██▊       | 10/35 [00:05<00:14,  1.72it/s][32m [repeated 20x across cluster][0m
+[36m(WorkerDict pid=2443551)[0m Capturing CUDA graph shapes:  54%|█████▍    | 19/35 [00:11<00:09,  1.71it/s][32m [repeated 20x across cluster][0m
+[36m(WorkerDict pid=2443712)[0m Capturing CUDA graph shapes:  91%|█████████▏| 32/35 [00:15<00:01,  2.10it/s]
+[36m(WorkerDict pid=2443712)[0m Capturing CUDA graph shapes:  94%|█████████▍| 33/35 [00:15<00:00,  2.11it/s]
+[36m(WorkerDict pid=2443551)[0m Capturing CUDA graph shapes:  77%|███████▋  | 27/35 [00:16<00:05,  1.46it/s][32m [repeated 17x across cluster][0m
+[36m(WorkerDict pid=2443712)[0m Capturing CUDA graph shapes:  97%|█████████▋| 34/35 [00:16<00:00,  2.06it/s]
+[36m(WorkerDict pid=2443712)[0m Capturing CUDA graph shapes: 100%|██████████| 35/35 [00:17<00:00,  1.55it/s]Capturing CUDA graph shapes: 100%|██████████| 35/35 [00:17<00:00,  2.00it/s]
+[36m(WorkerDict pid=2443551)[0m Capturing CUDA graph shapes:  97%|█████████▋| 34/35 [00:20<00:00,  1.90it/s][32m [repeated 3x across cluster][0m
+[36m(WorkerDict pid=2443712)[0m /gpfs/radev/scratch/lafferty/ad2742/.conda/envs/verl-agent-webshop/lib/python3.10/site-packages/torch/distributed/fsdp/fully_sharded_data_parallel.py:690: FutureWarning: FSDP.state_dict_type() and FSDP.set_state_dict_type() are being deprecated. Please use APIs, get_state_dict() and set_state_dict(), which can support different parallelisms, FSDP1, FSDP2, DDP. API doc: https://pytorch.org/docs/stable/distributed.checkpoint.html#torch.distributed.checkpoint.state_dict.get_state_dict .Tutorial: https://pytorch.org/tutorials/recipes/distributed_checkpoint_recipe.html .
+[36m(WorkerDict pid=2443712)[0m   warnings.warn(
+[36m(WorkerDict pid=2443551)[0m Capturing CUDA graph shapes:  89%|████████▊ | 31/35 [00:18<00:02,  1.69it/s][32m [repeated 4x across cluster][0m
+[36m(WorkerDict pid=2443551)[0m Capturing CUDA graph shapes: 100%|██████████| 35/35 [00:20<00:00,  1.90it/s]Capturing CUDA graph shapes: 100%|██████████| 35/35 [00:20<00:00,  1.70it/s]
+[36m(TaskRunner pid=2420259)[0m wandb: Currently logged in as: alice-ding (alice-ding-yale-university) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+[36m(TaskRunner pid=2420259)[0m /gpfs/radev/scratch/lafferty/ad2742/.conda/envs/verl-agent-webshop/lib/python3.10/site-packages/wandb/analytics/sentry.py:258: DeprecationWarning: The `Scope.user` setter is deprecated in favor of `Scope.set_user()`.
+[36m(TaskRunner pid=2420259)[0m   self.scope.user = {"email": email}
+[36m(TaskRunner pid=2420259)[0m /gpfs/radev/scratch/lafferty/ad2742/.conda/envs/verl-agent-webshop/lib/python3.10/site-packages/wandb/analytics/sentry.py:258: DeprecationWarning: The `Scope.user` setter is deprecated in favor of `Scope.set_user()`.
+[36m(TaskRunner pid=2420259)[0m   self.scope.user = {"email": email}
+[36m(TaskRunner pid=2420259)[0m wandb: Tracking run with wandb version 0.20.1
+[36m(TaskRunner pid=2420259)[0m wandb: Run data is saved locally in /gpfs/radev/home/ad2742/verl-agent/wandb/run-20250708_130432-15ufn7op
+[36m(TaskRunner pid=2420259)[0m wandb: Run `wandb offline` to turn off syncing.
+[36m(TaskRunner pid=2420259)[0m wandb: Syncing run grpo_qwen2.5_1.5b
+[36m(TaskRunner pid=2420259)[0m wandb: ⭐️ View project at https://wandb.ai/alice-ding-yale-university/verl_agent_webshop
+[36m(TaskRunner pid=2420259)[0m wandb: 🚀 View run at https://wandb.ai/alice-ding-yale-university/verl_agent_webshop/runs/15ufn7op
+[36m(WorkerDict pid=2443711)[0m /gpfs/radev/scratch/lafferty/ad2742/.conda/envs/verl-agent-webshop/lib/python3.10/site-packages/torch/distributed/fsdp/fully_sharded_data_parallel.py:690: FutureWarning: FSDP.state_dict_type() and FSDP.set_state_dict_type() are being deprecated. Please use APIs, get_state_dict() and set_state_dict(), which can support different parallelisms, FSDP1, FSDP2, DDP. API doc: https://pytorch.org/docs/stable/distributed.checkpoint.html#torch.distributed.checkpoint.state_dict.get_state_dict .Tutorial: https://pytorch.org/tutorials/recipes/distributed_checkpoint_recipe.html .[32m [repeated 3x across cluster][0m
+[36m(WorkerDict pid=2443711)[0m   warnings.warn([32m [repeated 3x across cluster][0m
+[36m(TaskRunner pid=2420259)[0m Training Progress:   0%|          | 0/150 [00:00<?, ?it/s]
+[36m(TaskRunner pid=2420259)[0m Training Progress:   1%|          | 1/150 [02:58<7:23:13, 178.48s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:   1%|▏         | 2/150 [06:06<7:34:26, 184.23s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:   2%|▏         | 3/150 [08:59<7:18:17, 178.89s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:   3%|▎         | 4/150 [11:55<7:12:34, 177.77s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:   3%|▎         | 5/150 [18:47<10:33:43, 262.23s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:   4%|▍         | 6/150 [21:34<9:11:32, 229.81s/it] 
+[36m(TaskRunner pid=2420259)[0m Training Progress:   5%|▍         | 7/150 [24:30<8:26:03, 212.33s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:   5%|▌         | 8/150 [27:17<7:47:59, 197.74s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:   6%|▌         | 9/150 [29:59<7:18:41, 186.68s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:   7%|▋         | 10/150 [36:29<9:42:07, 249.48s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:   7%|▋         | 11/150 [39:08<8:34:04, 221.90s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:   8%|▊         | 12/150 [41:58<7:53:53, 206.04s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:   9%|▊         | 13/150 [44:45<7:23:27, 194.22s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:   9%|▉         | 14/150 [47:28<6:58:36, 184.68s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  10%|█         | 15/150 [53:43<9:04:29, 241.99s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  11%|█         | 16/150 [56:26<8:07:47, 218.42s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  11%|█▏        | 17/150 [59:02<7:22:13, 199.50s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  12%|█▏        | 18/150 [1:01:37<6:49:48, 186.28s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  13%|█▎        | 19/150 [1:04:15<6:28:15, 177.83s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  13%|█▎        | 20/150 [1:10:25<8:30:02, 235.40s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  14%|█▍        | 21/150 [1:13:14<7:43:27, 215.56s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  15%|█▍        | 22/150 [1:15:56<7:05:18, 199.37s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  15%|█▌        | 23/150 [1:18:29<6:32:41, 185.52s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  16%|█▌        | 24/150 [1:21:17<6:18:37, 180.30s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  17%|█▋        | 25/150 [1:27:28<8:14:36, 237.41s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  17%|█▋        | 26/150 [1:30:09<7:23:38, 214.66s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  18%|█▊        | 27/150 [1:32:58<6:51:55, 200.94s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  19%|█▊        | 28/150 [1:35:33<6:20:26, 187.11s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  19%|█▉        | 29/150 [1:38:14<6:01:30, 179.26s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  20%|██        | 30/150 [1:44:15<7:47:29, 233.74s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  21%|██        | 31/150 [1:46:53<6:58:43, 211.12s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  21%|██▏       | 32/150 [1:49:31<6:23:44, 195.12s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  22%|██▏       | 33/150 [1:52:06<5:57:04, 183.12s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  23%|██▎       | 34/150 [1:54:45<5:40:04, 175.90s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  23%|██▎       | 35/150 [2:00:46<7:23:22, 231.32s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  24%|██▍       | 36/150 [2:03:23<6:37:15, 209.08s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  25%|██▍       | 37/150 [2:06:08<6:08:46, 195.81s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  25%|██▌       | 38/150 [2:08:54<5:48:46, 186.85s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  26%|██▌       | 39/150 [2:11:39<5:33:23, 180.21s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  27%|██▋       | 40/150 [2:17:52<7:16:45, 238.23s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  27%|██▋       | 41/150 [2:20:36<6:32:13, 215.90s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  28%|██▊       | 42/150 [2:23:20<6:00:28, 200.26s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  29%|██▊       | 43/150 [2:26:00<5:35:52, 188.34s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  29%|██▉       | 44/150 [2:28:38<5:16:11, 178.98s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  30%|███       | 45/150 [2:34:40<6:49:25, 233.95s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  31%|███       | 46/150 [2:37:22<6:08:20, 212.51s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  31%|███▏      | 47/150 [2:39:59<5:35:58, 195.71s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  32%|███▏      | 48/150 [2:42:38<5:14:10, 184.80s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  33%|███▎      | 49/150 [2:45:14<4:56:31, 176.16s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  33%|███▎      | 50/150 [2:51:49<6:43:06, 241.87s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  34%|███▍      | 51/150 [2:54:27<5:57:27, 216.64s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  35%|███▍      | 52/150 [2:56:56<5:20:34, 196.28s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  35%|███▌      | 53/150 [2:59:34<4:58:59, 184.95s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  36%|███▌      | 54/150 [3:02:07<4:40:21, 175.23s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  37%|███▋      | 55/150 [3:08:02<6:02:49, 229.16s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  37%|███▋      | 56/150 [3:10:30<5:21:09, 204.99s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  38%|███▊      | 57/150 [3:13:14<4:58:30, 192.58s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  39%|███▊      | 58/150 [3:15:46<4:36:37, 180.41s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  39%|███▉      | 59/150 [3:18:20<4:21:42, 172.56s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  40%|████      | 60/150 [3:24:02<5:35:04, 223.38s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  41%|████      | 61/150 [3:26:32<4:58:31, 201.25s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  41%|████▏     | 62/150 [3:28:58<4:30:58, 184.75s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  42%|████▏     | 63/150 [3:31:33<4:15:02, 175.89s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  43%|████▎     | 64/150 [3:34:04<4:01:27, 168.46s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  43%|████▎     | 65/150 [3:39:53<5:14:57, 222.32s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  44%|████▍     | 66/150 [3:42:25<4:41:47, 201.28s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  45%|████▍     | 67/150 [3:44:57<4:18:16, 186.70s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  45%|████▌     | 68/150 [3:47:27<3:59:52, 175.52s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  46%|████▌     | 69/150 [3:50:03<3:49:09, 169.75s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  47%|████▋     | 70/150 [3:56:02<5:01:54, 226.44s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  47%|████▋     | 71/150 [3:58:38<4:30:18, 205.30s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  48%|████▊     | 72/150 [4:01:07<4:05:05, 188.54s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  49%|████▊     | 73/150 [4:03:35<3:46:14, 176.30s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  49%|████▉     | 74/150 [4:05:56<3:30:00, 165.80s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  50%|█████     | 75/150 [4:11:35<4:32:01, 217.63s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  51%|█████     | 76/150 [4:13:59<4:01:23, 195.73s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  51%|█████▏    | 77/150 [4:16:35<3:43:27, 183.67s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  52%|█████▏    | 78/150 [4:19:03<3:27:25, 172.85s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  53%|█████▎    | 79/150 [4:21:31<3:15:55, 165.56s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  53%|█████▎    | 80/150 [4:27:22<4:18:05, 221.23s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  54%|█████▍    | 81/150 [4:29:58<3:51:56, 201.69s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  55%|█████▍    | 82/150 [4:32:27<3:30:42, 185.92s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  55%|█████▌    | 83/150 [4:35:04<3:17:37, 176.98s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  56%|█████▌    | 84/150 [4:37:37<3:06:48, 169.83s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  57%|█████▋    | 85/150 [4:43:24<4:01:47, 223.19s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  57%|█████▋    | 86/150 [4:45:58<3:35:53, 202.40s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  58%|█████▊    | 87/150 [4:48:35<3:18:01, 188.59s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  59%|█████▊    | 88/150 [4:51:01<3:01:55, 176.05s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  59%|█████▉    | 89/150 [4:53:34<2:51:47, 168.97s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  60%|██████    | 90/150 [4:59:45<3:49:36, 229.61s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  61%|██████    | 91/150 [5:02:10<3:20:51, 204.26s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  61%|██████▏   | 92/150 [5:04:41<3:02:00, 188.28s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  62%|██████▏   | 93/150 [5:07:12<2:48:16, 177.13s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  63%|██████▎   | 94/150 [5:09:46<2:38:52, 170.23s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  63%|██████▎   | 95/150 [5:15:52<3:29:51, 228.94s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  64%|██████▍   | 96/150 [5:18:26<3:05:48, 206.45s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  65%|██████▍   | 97/150 [5:21:04<2:49:30, 191.90s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  65%|██████▌   | 98/150 [5:23:44<2:38:00, 182.32s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  66%|██████▌   | 99/150 [5:26:20<2:28:10, 174.32s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  67%|██████▋   | 100/150 [5:32:16<3:10:50, 229.01s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  67%|██████▋   | 101/150 [5:34:45<2:47:15, 204.81s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  68%|██████▊   | 102/150 [5:37:13<2:30:20, 187.93s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  69%|██████▊   | 103/150 [5:39:45<2:18:40, 177.03s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  69%|██████▉   | 104/150 [5:42:10<2:08:20, 167.40s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  70%|███████   | 105/150 [5:47:51<2:44:43, 219.64s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  71%|███████   | 106/150 [5:50:24<2:26:23, 199.63s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  71%|███████▏  | 107/150 [5:53:00<2:13:40, 186.53s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  72%|███████▏  | 108/150 [5:55:20<2:00:44, 172.50s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  73%|███████▎  | 109/150 [5:57:51<1:53:30, 166.11s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  73%|███████▎  | 110/150 [6:03:25<2:24:11, 216.30s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  74%|███████▍  | 111/150 [6:05:54<2:07:35, 196.29s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  75%|███████▍  | 112/150 [6:08:26<1:55:48, 182.85s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  75%|███████▌  | 113/150 [6:10:52<1:45:57, 171.83s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  76%|███████▌  | 114/150 [6:13:22<1:39:10, 165.30s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  77%|███████▋  | 115/150 [6:19:28<2:11:35, 225.59s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  77%|███████▋  | 116/150 [6:21:58<1:54:58, 202.89s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  78%|███████▊  | 117/150 [6:24:19<1:41:21, 184.28s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  79%|███████▊  | 118/150 [6:26:43<1:31:46, 172.07s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  79%|███████▉  | 119/150 [6:29:10<1:25:07, 164.77s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  80%|████████  | 120/150 [6:35:09<1:51:31, 223.04s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  81%|████████  | 121/150 [6:37:44<1:37:52, 202.51s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  81%|████████▏ | 122/150 [6:40:18<1:27:43, 187.97s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  82%|████████▏ | 123/150 [6:42:47<1:19:16, 176.16s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  83%|████████▎ | 124/150 [6:45:22<1:13:39, 169.98s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  83%|████████▎ | 125/150 [6:51:12<1:33:17, 223.90s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  84%|████████▍ | 126/150 [6:53:48<1:21:25, 203.57s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  85%|████████▍ | 127/150 [6:56:08<1:10:40, 184.38s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  85%|████████▌ | 128/150 [6:58:32<1:03:13, 172.45s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  86%|████████▌ | 129/150 [7:01:06<58:23, 166.82s/it]  
+[36m(TaskRunner pid=2420259)[0m Training Progress:  87%|████████▋ | 130/150 [7:06:54<1:13:46, 221.30s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  87%|████████▋ | 131/150 [7:09:15<1:02:25, 197.15s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  88%|████████▊ | 132/150 [7:11:31<53:36, 178.70s/it]  
+[36m(TaskRunner pid=2420259)[0m Training Progress:  89%|████████▊ | 133/150 [7:13:50<47:18, 166.99s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  89%|████████▉ | 134/150 [7:16:18<42:57, 161.07s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  90%|█████████ | 135/150 [7:22:15<55:00, 220.04s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  91%|█████████ | 136/150 [7:24:50<46:47, 200.54s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  91%|█████████▏| 137/150 [7:27:18<40:01, 184.71s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  92%|█████████▏| 138/150 [7:29:56<35:19, 176.65s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  93%|█████████▎| 139/150 [7:32:30<31:07, 169.79s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  93%|█████████▎| 140/150 [7:38:33<37:57, 227.73s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  94%|█████████▍| 141/150 [7:41:06<30:47, 205.25s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  95%|█████████▍| 142/150 [7:43:45<25:31, 191.42s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  95%|█████████▌| 143/150 [7:46:17<20:57, 179.57s/it]
+[36m(TaskRunner pid=2420259)[0m Training Progress:  96%|█████████▌| 144/150 [7:48:49<17:08, 171.36s/it]
+slurmstepd: error: *** JOB 386579 ON r4507u13n01 CANCELLED AT 2025-07-08T21:01:21 DUE TO TIME LIMIT ***
